@@ -1,0 +1,117 @@
+
+File mqtt-subscribe
+
+Script types: portrule
+Categories: safe, discovery, version
+Download: https://svn.nmap.org/nmap/scripts/mqtt-subscribe.nse
+User Summary
+
+Dumps message traffic from MQTT brokers.
+
+This script establishes a connection to an MQTT broker and subscribes to the requested topics. The default topics have been chosen to receive system information and all messages from other clients. This allows Nmap, to listen to all messages being published by clients to the MQTT broker.
+
+For additional information:
+
+    https://en.wikipedia.org/wiki/MQTT
+    https://docs.oasis-open.org/mqtt/mqtt/v3.1.1/os/mqtt-v3.1.1-os.html
+
+Script Arguments
+
+mqtt-subscribe.protocol-name
+
+MQTT protocol name, defaults to MQTT.
+mqtt-subscribe.listen-msgs
+
+Number of PUBLISH messages to receive, defaults to 100. A value of zero forces this script to stop only when listen-time has passed.
+mqtt-subscribe.username
+
+Username for MQTT brokers requiring authentication.
+mqtt-subscribe.protocol-level
+
+MQTT protocol level, defaults to 4.
+mqtt-subscribe.topic
+
+Topic filters to indicate which PUBLISH messages we'd like to receive.
+mqtt-subscribe.password
+
+Password for MQTT brokers requiring authentication.
+mqtt-subscribe.listen-time
+
+Length of time to listen for PUBLISH messages, defaults to 5s. A value of zero forces this script to stop only when listen-msgs PUBLISH messages have been received.
+mqtt-subscribe.client-id
+
+MQTT client identifier, defaults to nmap with a random suffix.
+
+Example Usage
+
+nmap -p 1883 --script mqtt-subscribe <target>
+
+Script Output
+
+PORT     STATE SERVICE                 REASON
+1883/tcp open  mosquitto version 1.4.8 syn-ack
+| mqtt-subscribe:
+|   Topics and their most recent payloads:
+|     $SYS/broker/load/publish/received/5min: 0.27
+|     $SYS/broker/publish/messages/received: 7
+|     $SYS/broker/heap/current: 39240
+|     $SYS/broker/load/messages/sent/15min: 21.54
+|     $SYS/broker/load/bytes/sent/5min: 647.13
+|     $SYS/broker/clients/disconnected: 40
+|     $SYS/broker/clients/connected: 1
+|     $SYS/broker/subscriptions/count: 40
+|     $SYS/broker/load/publish/received/15min: 0.46
+|     $SYS/broker/clients/inactive: 40
+|     $SYS/broker/messages/sent: 2318
+|     $SYS/broker/load/publish/sent/1min: 2.48
+|     $SYS/broker/load/sockets/1min: 0.09
+|     $SYS/broker/load/connections/15min: 0.41
+|     $SYS/broker/load/bytes/sent/15min: 822.79
+|     $SYS/broker/load/sockets/15min: 0.81
+|     $SYS/broker/version: mosquitto version 1.4.8
+|     $SYS/broker/load/messages/received/5min: 1.24
+|     $SYS/broker/load/publish/sent/15min: 20.39
+|     $SYS/broker/uptime: 225478 seconds
+|     $SYS/broker/load/publish/received/1min: 0.05
+|     $SYS/broker/publish/messages/dropped: 0
+|     $SYS/broker/retained messages/count: 47
+|     $SYS/broker/messages/received: 293
+|     $SYS/broker/load/connections/5min: 0.28
+|     $SYS/broker/load/messages/sent/1min: 2.78
+|     $SYS/broker/bytes/sent: 83026
+|     $SYS/broker/load/bytes/received/5min: 13.98
+|     $SYS/broker/load/messages/received/1min: 0.35
+|     $SYS/broker/messages/stored: 47
+|     $SYS/broker/publish/messages/sent: 2070
+|     $SYS/broker/load/sockets/5min: 0.53
+|     $SYS/broker/clients/active: 1
+|     $SYS/broker/timestamp: Sun, 14 Feb 2016 15:48:26 +0000
+|     $SYS/broker/load/bytes/received/15min: 17.83
+|     $SYS/broker/publish/bytes/received: 49
+|     $SYS/broker/load/publish/sent/5min: 16.03
+|     $SYS/broker/publish/bytes/sent: 9752
+|     $SYS/broker/load/bytes/sent/1min: 100.49
+|     $SYS/broker/load/bytes/received/1min: 2.72
+|     $SYS/broker/load/connections/1min: 0.06
+|     $SYS/broker/clients/expired: 0
+|     $SYS/broker/load/messages/received/15min: 1.49
+|     $SYS/broker/load/messages/sent/5min: 17.00
+|     $SYS/broker/bytes/received: 2520
+|     $SYS/broker/heap/maximum: 41992
+|_    $SYS/broker/clients/total: 41
+
+Requires
+
+    mqtt
+    nmap
+    shortport
+    stdnse
+    table
+
+Author:
+
+    Mak Kolybabi <mak@kolybabi.com>
+
+License: Same as Nmap--See https://nmap.org/book/man-legal.html
+
+Source: https://nmap.org/nsedoc/scripts/mqtt-subscribe.html
